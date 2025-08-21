@@ -1,513 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced GradeBot - Moodle Gradebook Assistant</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .avatar-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .chatbot-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .chatbot-avatar:hover {
-            transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-        }
-        
-        .chat-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            width: 500px;
-            max-width: 95%;
-            padding: 30px;
-        }
-        
-        .chat-header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e9ecef;
-        }
-        
-        .chat-header h2 {
-            color: #2c3e50;
-            margin: 0;
-            font-size: 1.8em;
-            font-weight: 600;
-        }
-        
-        .chat-header p {
-            color: #6c757d;
-            margin: 10px 0 0 0;
-            font-size: 1em;
-        }
-        
-        .chat-box {
-            height: 400px;
-            overflow-y: auto;
-            border: none;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            background: #f8f9fa;
-        }
-        
-        .input-container {
-            position: relative;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #dee2e6;
-            border-radius: 25px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-        
-        .chat-input:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-        
-        .send-button {
-            padding: 15px 20px;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .send-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-        }
-        
-        .message {
-            margin: 20px 0;
-            padding: 15px 20px;
-            border-radius: 20px;
-            max-width: 85%;
-            word-wrap: break-word;
-            line-height: 1.5;
-        }
-        
-        .user-message {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .bot-message {
-            background: linear-gradient(45deg, #e9ecef, #dee2e6);
-            color: #2c3e50;
-            margin-right: auto;
-            border-bottom-left-radius: 5px;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #4CAF50;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Custom scrollbar */
-        .chat-box::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .chat-box::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        
-        .chat-box::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            border-radius: 10px;
-        }
-        
-        .chat-box::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(45deg, #45a049, #4CAF50);
-        }
-
-        .feature-list {
-            margin: 10px 0;
-        }
-        
-        .feature-item {
-            margin: 8px 0;
-            padding-left: 15px;
-            position: relative;
-        }
-        
-        .feature-item::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>GB — GradeBot Pro</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.6;margin:0;padding:0;color:#0f172a;background:#f8fafc;}
+    header{background:#0369a1;color:#fff;padding:2rem 1.25rem}
+    header h1{margin:0;font-size:1.5rem}
+    main{max-width:1000px;margin:1.5rem auto;padding:1.25rem;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(2,6,23,.06)}
+    h2{color:#0f172a;margin-top:1.25rem}
+    p{color:#334155}
+    pre, code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Roboto Mono,monospace;background:#0f172a;color:#e6edf3;padding:.5rem;border-radius:6px;overflow:auto}
+    ul{margin:0 0 1rem 1.25rem}
+    .grid{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media(min-width:880px){.grid{grid-template-columns:1fr 320px}}
+    aside{padding:1rem;border-left:1px solid #e6eef6}
+    .card{background:#f8fafc;padding:.9rem;border-radius:6px}
+    .small{font-size:.9rem;color:#475569}
+    table{width:100%;border-collapse:collapse;margin-top:.5rem}
+    th,td{padding:.4rem .6rem;border:1px solid #e6eef6;text-align:left}
+  </style>
 </head>
 <body>
-    <div class="avatar-container">
-        <div class="chatbot-avatar">GB</div>
+  <header>
+    <h1>GB — GradeBot Pro</h1>
+    <p class="small">Your comprehensive Moodle Gradebook assistant</p>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section>
+        <h2>Welcome</h2>
+        <p>Hello! I'm <strong>GradeBot Pro</strong>, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
+
+        <h2>Troubleshooting & Extra Information</h2>
+        <p>This section consolidates common issues, checks, and step-by-step solutions to help diagnose and fix gradebook problems quickly.</p>
+
+        <h3>Common issues</h3>
+        <ul>
+          <li><strong>Missing grades</strong> — check activity settings and gradebook setup.</li>
+          <li><strong>Wrong calculations</strong> — verify aggregation methods and category weights.</li>
+          <li><strong>Import failures</strong> — check file format and data integrity.</li>
+          <li><strong>Permission errors</strong> — review role capabilities and activity settings.</li>
+          <li><strong>Display problems</strong> — clear cache and check browser compatibility.</li>
+          <li><strong>Performance issues</strong> — optimize settings for large courses.</li>
+        </ul>
+
+        <h3>Troubleshooting calculations</h3>
+        <ul>
+          <li>When calculations seem incorrect:
+            <ul>
+              <li>1) Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
+              <li>2) Check category weights sum appropriately (total 100% where required).</li>
+              <li>3) Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
+              <li>4) Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
+              <li>5) Review excluded items and hidden grade items.</li>
+              <li>6) Check category min/max values and validation rules.</li>
+              <li>7) Test with simple examples (create two items and verify expected results).</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Missing grades — quick fixes</h3>
+        <ul>
+          <li>If grades are missing from your gradebook:
+            <ul>
+              <li>1) Check the activity is set to "Send grades to gradebook" in activity settings.</li>
+              <li>2) Verify the activity has a grade item created in the gradebook.</li>
+              <li>3) Ensure students have submitted work (or a grade was entered).</li>
+              <li>4) Refresh the gradebook view after making changes.</li>
+              <li>5) Look for the grade item in the correct category and confirm aggregation settings.</li>
+              <li>6) Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
+              <li>7) Verify activity completion settings if completion auto-creates grades.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Export issues & tips</h3>
+        <ul>
+          <li>Common problems when exporting:
+            <ul>
+              <li>1) Character encoding issues — use UTF-8 encoding for international characters.</li>
+              <li>2) Missing data — check export settings and filters; include all desired items.</li>
+              <li>3) Format errors — ensure proper CSV structure with headers and delimiters.</li>
+              <li>4) Permission denied — verify export capabilities in your role.</li>
+              <li>5) Large file issues — export in smaller batches for courses with many students.</li>
+              <li>6) Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Step-by-step gradebook setup</h3>
+        <ol>
+          <li>Go to Administration &gt; Grades &gt; Setup &gt; Gradebook setup.</li>
+          <li>Click "Add category" to create main assessment categories (e.g., Assignments, Quizzes, Exams).</li>
+          <li>Choose an aggregation method for each category — typically "Weighted mean of grades" for flexible weighting.</li>
+          <li>Assign weights to each category based on your syllabus (total 100%).</li>
+          <li>Add individual grade items or link activities to the gradebook and assign them to categories.</li>
+          <li>Configure grade item settings: max/min values, drop lowest, exclude empty grades, etc.</li>
+          <li>Test calculations with sample grades and adjust boundaries or letters if using a grading scale.</li>
+        </ol>
+
+        <h3>Advanced formulas & examples</h3>
+        <p>Examples of advanced gradebook formulas and conditional grading patterns you may use:</p>
+        <div class="card">
+          <p class="small"><strong>Conditional grading example</strong></p>
+          <pre>IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</pre>
+          <p class="small"><strong>Weighted average with multiple components</strong></p>
+          <pre>(0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</pre>
+          <p class="small"><strong>Drop lowest of 3 quizzes</strong></p>
+          <pre>(SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</pre>
+          <p class="small">These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
+        </div>
+
+        <h3>Quick diagnostic checklist</h3>
+        <ul>
+          <li>Are aggregation and category settings correct?</li>
+          <li>Are activities sending grades to the gradebook?</li>
+          <li>Have students submitted work or have grades been manually entered?</li>
+          <li>Are any grade items hidden or excluded?</li>
+          <li>Do roles and permissions allow viewing/exporting grades?</li>
+          <li>Have you tested with small sample data to reproduce the issue?</li>
+        </ul>
+
+        <h2>Notes & Links</h2>
+        <p>For persistent or complex issues, consider:</p>
+        <ul>
+          <li>Checking your LMS's debug logs and gradebook reports.</li>
+          <li>Verifying plugin compatibility (grading/reporting plugins can change behavior).</li>
+          <li>Contacting your LMS administrator with exact reproduction steps and screenshots.</li>
+        </ul>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3 class="small">GradeBot Pro</h3>
+          <p class="small">Helpful commands:</p>
+          <ul class="small">
+            <li>Setup guide</li>
+            <li>Troubleshoot calculations</li>
+            <li>Export best practices</li>
+            <li>Advanced formula help</li>
+          </ul>
+          <p class="small">Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
+        </div>
+      </aside>
     </div>
-
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>GradeBot Pro</h2>
-            <p>Your comprehensive Moodle Gradebook assistant</p>
-        </div>
-        
-        <div class="chat-box" id="chat-box">
-            <div class="message bot-message fade-in">
-                Hello! I'm GradeBot Pro, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?
-            </div>
-        </div>
-        
-        <div class="input-container">
-            <input type="text" id="chat-input" class="chat-input" placeholder="Ask me anything about Moodle Gradebook..." onkeypress="sendMessage(event)">
-            <button class="send-button" onclick="sendMessage({key: 'Enter'})">Send</button>
-        </div>
-    </div>
-
-    <script>
-        const gradebookKnowledge = {
-            // Core Information
-            what_is_gradebook: "The Moodle Gradebook is a comprehensive grade management system that allows instructors to track, calculate, and report student performance. It automatically collects grades from activities like quizzes, assignments, and forums, while also allowing manual grade entry. The gradebook provides flexible grading schemes, category organization, weighted calculations, and detailed reporting for both instructors and students.",
-            
-            why_use_gradebook: "The Moodle Gradebook offers numerous benefits: automated grade collection from activities, flexible weighting systems, real-time student progress tracking, comprehensive reporting, grade export capabilities, student self-monitoring tools, efficient feedback distribution, and integration with learning analytics. It saves time, reduces errors, and provides transparency in the grading process.",
-            
-            // Setup and Configuration
-            gradebook_setup: "To set up your Moodle Gradebook: 1) Navigate to 'Grades' from your course administration menu, 2) Select 'Setup' then 'Gradebook setup', 3) Choose your aggregation method (weighted mean, simple weighted mean, mean of grades, etc.), 4) Create grade categories for different types of assessments, 5) Set category weights according to your syllabus, 6) Configure grade items and scales, 7) Set up grade boundaries and letter grades if needed, 8) Configure gradebook preferences and view settings.",
-            
-            aggregation_methods: "Moodle offers several aggregation methods: 1) **Weighted Mean of Grades** - uses weights to calculate final grades, 2) **Simple Weighted Mean** - uses point values for weighting, 3) **Mean of Grades** - simple average of all grades, 4) **Median of Grades** - middle value when grades are arranged in order, 5) **Lowest/Highest Grade** - takes the minimum or maximum grade, 6) **Mode of Grades** - most frequently occurring grade, 7) **Natural** - uses the raw point totals and maximum points.",
-            
-            // Categories and Organization
-            grade_categories: "Grade categories help organize your gradebook by grouping related items together (e.g., Assignments, Quizzes, Participation). Each category can have its own weight, aggregation method, and settings. You can create nested subcategories, exclude items from calculations, use drop lowest options, and apply different grading scales. Categories make gradebooks more organized and allow for sophisticated weighting schemes.",
-            
-            weighted_categories: "Weighted categories allow you to assign different importance levels to various types of assessments. For example: Assignments (30%), Quizzes (25%), Midterm Exam (20%), Final Exam (20%), Participation (5%). The system calculates each category's contribution by multiplying the category average by its weight, then sums all weighted contributions for the final grade.",
-            
-            category_contribution: "Category contribution is calculated as: (Points Earned in Category / Total Possible Points in Category) × Category Weight = Category Contribution. For example, if a student earns 85/100 points in Assignments (30% weight): (85/100) × 0.30 = 0.255 or 25.5% contribution to the final grade.",
-            
-            // Grade Items and Scales
-            grade_items: "Grade items are individual assessments in your gradebook. They can be: 1) **Activity-based** - automatically created from Moodle activities, 2) **Manual** - created by instructors for external assessments, 3) **Calculated** - derived from formulas using other grade items. Each item has properties like maximum points, grading scale, category, weight, and whether it's included in calculations.",
-            
-            grading_scales: "Moodle supports various grading scales: 1) **Numerical** - point-based scoring (0-100), 2) **Letter Grades** - A, B, C, D, F with customizable boundaries, 3) **Custom Scales** - instructor-defined scales like 'Excellent, Good, Fair, Poor', 4) **Competency-based** - linked to learning outcomes, 5) **Pass/Fail** - binary assessment. Scales can be applied at the site, course, or individual item level.",
-            
-            // Calculations and Formulas
-            grade_calculations: "Moodle supports advanced grade calculations using formulas. You can create calculated grade items using mathematical expressions with grade item references, functions like SUM, AVERAGE, MAX, MIN, and conditional logic. Examples: =[[Assignment1]]+[[Assignment2]], =AVERAGE([[Quiz1]];[[Quiz2]];[[Quiz3]]), =IF([[Midterm]]>50;[[Final]];0). Calculations update automatically when component grades change.",
-            
-            extra_credit: "Extra credit can be implemented several ways: 1) Create separate extra credit categories with appropriate weights, 2) Use calculated grade items to add bonus points, 3) Set category totals to exceed 100% and use 'Aggregate only non-empty grades', 4) Create bonus activities with points added to existing categories. The method depends on your grading policy and desired calculation behavior.",
-            
-            // Gradebook Views and Reports
-            gradebook_reports: "Moodle provides multiple gradebook reports: 1) **Grader Report** - spreadsheet-like view for entering grades, 2) **User Report** - individual student grade view, 3) **Overview Report** - summary across courses, 4) **Outcomes Report** - competency-based assessment tracking, 5) **Single View** - focus on one grade item or user, 6) **History Report** - grade change tracking and audit trail.",
-            
-            grader_report: "The Grader Report is the main interface for viewing and entering grades. It provides a spreadsheet-like view with students as rows and grade items as columns. Features include: quick editing, bulk operations, grade highlighting, filtering options, export capabilities, and real-time calculations. You can customize columns, freeze student names, and use keyboard navigation for efficient grade entry.",
-            
-            user_report: "The User Report shows an individual student's grades and progress. Students see their own grades, feedback, and category breakdowns. Instructors can view any student's report. The report includes: current grades, category totals, course total, grade trends, feedback comments, and submission statuses. It provides transparency and helps students understand their standing.",
-            
-            // Import and Export
-            grade_import_export: "Moodle supports grade import/export in CSV and XML formats. **Export options**: Include feedback, export all or selected items, choose formatting options. **Import features**: Match columns to grade items, preview before import, handle errors gracefully, support for various delimiters. Always backup before importing and verify data integrity afterward.",
-            
-            csv_import: "To import grades via CSV: 1) Export a template from your gradebook, 2) Fill in the grades using the same format, 3) Go to Grades > Import > CSV file, 4) Upload your file and map columns to grade items, 5) Preview the import to check for errors, 6) Confirm the import. Ensure student identifiers match exactly and grades are in the correct format.",
-            
-            // Permissions and Privacy
-            gradebook_permissions: "Gradebook permissions control who can view and edit grades. Key capabilities include: 'View gradebook', 'Edit grades', 'Manage gradebook', 'Export grades', 'Import grades', and 'View hidden grades'. Permissions can be set at course level and overridden for specific users. Students can typically view only their own grades unless given additional permissions.",
-            
-            hiding_grades: "Grades can be hidden from students at multiple levels: 1) **Individual grade items** - hide specific assessment results, 2) **Categories** - hide entire sections until ready, 3) **Course total** - hide overall grade calculation, 4) **Time-based** - automatically reveal grades after specific dates. Hidden grades still participate in calculations but aren't visible to students.",
-            
-            // Advanced Features
-            grade_letters: "Grade letters convert numerical scores to letter grades (A, B, C, etc.). Configuration includes: setting grade boundaries (A: 90-100%, B: 80-89%, etc.), choosing display preferences, applying to course total or individual items, and customizing letter sets. Letters can be site-wide defaults or course-specific customizations.",
-            
-            outcomes_competencies: "Outcomes and competencies track learning objectives beyond traditional grades. Features include: competency frameworks, proficiency scales, evidence collection, progress tracking, and reporting. They integrate with gradebook to show achievement levels, completion status, and learning pathways. Useful for standards-based grading and professional development tracking.",
-            
-            grade_history: "Grade history tracks all changes made to grades, including: who made changes, when changes occurred, old and new values, and reasons for changes. This audit trail ensures accountability, helps resolve disputes, and supports administrative requirements. Access through Grades > Reports > Grade history.",
-            
-            // Mobile and Accessibility
-            mobile_gradebook: "The Moodle mobile app provides gradebook access with features like: grade viewing for students, basic grade entry for teachers, offline synchronization, push notifications for new grades, and responsive design. Functionality may be limited compared to desktop version, but essential features are available.",
-            
-            gradebook_accessibility: "Moodle gradebook includes accessibility features: keyboard navigation, screen reader support, high contrast options, customizable font sizes, alternative text for images, and WCAG compliance. These ensure all users can effectively access and use gradebook functionality regardless of disabilities.",
-            
-            // Troubleshooting
-            common_issues: "Common gradebook issues include: 1) **Missing grades** - check activity settings and gradebook setup, 2) **Wrong calculations** - verify aggregation methods and weights, 3) **Import failures** - check file format and data integrity, 4) **Permission errors** - review role capabilities, 5) **Display problems** - clear cache and check browser compatibility, 6) **Performance issues** - optimize settings for large courses.",
-            
-            troubleshooting_calculations: "When calculations seem incorrect: 1) Verify aggregation method matches your intentions, 2) Check category weights sum appropriately, 3) Look for empty grades affecting averages, 4) Confirm 'Aggregate only non-empty grades' settings, 5) Review excluded items, 6) Check for hidden grade items, 7) Validate min/max values, 8) Test with simple examples to isolate issues.",
-            
-            // Integration and Extensions
-            gradebook_integrations: "Moodle Gradebook integrates with: Learning Analytics for predictive insights, plagiarism detection tools, external tools via LTI, student information systems, reporting platforms, mobile applications, and third-party grade management systems. These integrations extend functionality and streamline workflows.",
-            
-            // Best Practices
-            gradebook_best_practices: "Best practices include: 1) Plan your gradebook structure before course start, 2) Use consistent naming conventions, 3) Regularly backup grade data, 4) Communicate grading policies clearly to students, 5) Test calculations with sample data, 6) Provide timely feedback with grades, 7) Use categories to organize assessments logically, 8) Monitor student progress regularly, 9) Keep gradebook settings simple when possible, 10) Document any complex calculation methods."
-        };
-
-        // Enhanced natural language processing
-        function processUserInput(message) {
-            const lowerMessage = message.toLowerCase();
-            const words = lowerMessage.split(/\s+/);
-            
-            // Intent detection with scoring
-            const intents = {
-                what_is: ['what', 'definition', 'define', 'explain', 'about', 'overview'],
-                why_use: ['why', 'benefit', 'advantage', 'reason', 'purpose', 'importance'],
-                how_to: ['how', 'setup', 'configure', 'create', 'make', 'do', 'step', 'guide', 'tutorial'],
-                troubleshoot: ['problem', 'issue', 'error', 'wrong', 'broken', 'fix', 'solve', 'help', 'trouble'],
-                calculate: ['calculate', 'computation', 'formula', 'math', 'weight', 'percentage'],
-                import_export: ['import', 'export', 'csv', 'file', 'upload', 'download'],
-                permissions: ['permission', 'access', 'role', 'capability', 'hide', 'show', 'privacy'],
-                mobile: ['mobile', 'app', 'phone', 'tablet', 'android', 'ios'],
-                best_practices: ['best', 'practice', 'tip', 'recommendation', 'advice', 'should']
-            };
-            
-            // Topic detection
-            const topics = {
-                gradebook_general: ['gradebook', 'grade book', 'grading'],
-                categories: ['category', 'categories', 'organization', 'group'],
-                weighted: ['weight', 'weighted', 'weighting'],
-                aggregation: ['aggregation', 'calculation', 'method', 'mean', 'average'],
-                scales: ['scale', 'letter', 'grade', 'scoring', 'points'],
-                reports: ['report', 'view', 'display', 'grader report', 'user report'],
-                items: ['item', 'assignment', 'quiz', 'activity', 'assessment'],
-                outcomes: ['outcome', 'competency', 'competencies', 'standards'],
-                history: ['history', 'changes', 'audit', 'track'],
-                accessibility: ['accessibility', 'screen reader', 'keyboard', 'wcag']
-            };
-            
-            let bestMatch = null;
-            let bestScore = 0;
-            
-            // Score potential responses
-            for (const [key, content] of Object.entries(gradebookKnowledge)) {
-                let score = 0;
-                
-                // Check for direct keyword matches
-                words.forEach(word => {
-                    if (key.includes(word) || content.toLowerCase().includes(word)) {
-                        score += 2;
-                    }
-                });
-                
-                // Check intent alignment
-                for (const [intent, keywords] of Object.entries(intents)) {
-                    const intentMatch = keywords.some(keyword => words.includes(keyword));
-                    if (intentMatch && key.includes(intent.split('_')[0])) {
-                        score += 3;
-                    }
-                }
-                
-                // Check topic alignment
-                for (const [topic, keywords] of Object.entries(topics)) {
-                    const topicMatch = keywords.some(keyword => lowerMessage.includes(keyword));
-                    if (topicMatch && key.includes(topic.split('_')[1])) {
-                        score += 4;
-                    }
-                }
-                
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMatch = { key, content, score };
-                }
-            }
-            
-            return bestMatch;
-        }
-
-        function getBotResponse(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            // Greeting handling
-            if (/^(hi|hello|hey|greetings|good (morning|afternoon|evening))/.test(lowerMessage)) {
-                return "Hello! I'm GradeBot Pro, ready to help you with all your Moodle Gradebook questions. I have comprehensive knowledge about gradebook setup, categories, calculations, reports, troubleshooting, and best practices. What specific aspect would you like to explore?";
-            }
-            
-            // Gratitude handling
-            if (/^(thank|thanks|appreciate|grateful)/.test(lowerMessage)) {
-                return "You're very welcome! I'm here to help with any other Moodle Gradebook questions you might have. Feel free to ask about setup, calculations, categories, reports, or any other gradebook features.";
-            }
-            
-            // Help/capabilities inquiry
-            if (lowerMessage.includes('help') || lowerMessage.includes('can you') || lowerMessage.includes('what can')) {
-                return `I can help you with comprehensive Moodle Gradebook support including:
-
-<div class="feature-list">
-<div class="feature-item">Gradebook setup and configuration</div>
-<div class="feature-item">Categories and weighted grading</div>
-<div class="feature-item">Grade calculations and formulas</div>
-<div class="feature-item">Reports and views</div>
-<div class="feature-item">Import/export procedures</div>
-<div class="feature-item">Permissions and privacy settings</div>
-<div class="feature-item">Troubleshooting common issues</div>
-<div class="feature-item">Best practices and tips</div>
-<div class="feature-item">Mobile access and accessibility</div>
-<div class="feature-item">Integration with other tools</div>
-</div>
-
-Just ask me anything specific about these topics!`;
-            }
-            
-            // Process the message for best match
-            const match = processUserInput(message);
-            
-            if (match && match.score > 2) {
-                return match.content;
-            }
-            
-            // Fallback with suggestions
-            return `I'd be happy to help with that! While I didn't find a specific match for your question, I can assist with:
-
-• **Setup**: Gradebook configuration and aggregation methods
-• **Organization**: Categories, weights, and grade items  
-• **Calculations**: Formulas, extra credit, and weighting
-• **Reports**: Grader report, user views, and analytics
-• **Management**: Import/export, permissions, and hiding grades
-• **Troubleshooting**: Common issues and solutions
-
-Could you rephrase your question or ask about one of these specific areas?`;
-        }
-
-        function sendMessage(event) {
-            if (event.key === 'Enter' || event.type === 'click') {
-                const input = document.getElementById('chat-input');
-                const message = input.value.trim();
-                if (message) {
-                    addMessage('user', message);
-                    input.value = '';
-                    
-                    // Add enhanced typing indicator
-                    const typingElement = addTypingIndicator();
-                    
-                    // Simulate more realistic response time based on message complexity
-                    const responseTime = Math.min(Math.max(message.length * 50, 800), 2500);
-                    
-                    setTimeout(() => {
-                        typingElement.remove();
-                        const response = getBotResponse(message);
-                        addMessage('bot', response);
-                    }, responseTime);
-                }
-            }
-        }
-
-        function addMessage(sender, message) {
-            const chatBox = document.getElementById('chat-box');
-            const messageElement = document.createElement('div');
-            messageElement.className = `message ${sender}-message fade-in`;
-            messageElement.innerHTML = message; // Using innerHTML to support HTML formatting
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-            return messageElement;
-        }
-        
-        function addTypingIndicator() {
-            const chatBox = document.getElementById('chat-box');
-            const typingElement = document.createElement('div');
-            typingElement.className = 'message bot-message fade-in';
-            typingElement.innerHTML = `
-                <div class="typing-indicator">
-                    <span>GradeBot Pro is thinking</span>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
-            chatBox.appendChild(typingElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-            return typingElement;
-        }
-
-        // Initialize the application
-        window.onload = function() {
-            const chatInput = document.getElementById('chat-input');
-            chatInput.focus();
-            
-            // Add some example prompts to help users get started
-            setTimeout(() => {
-                const exampleElement = document.createElement('div');
-                exampleElement.className = 'message bot-message fade-in';
-                exampleElement.innerHTML = `
-                    <strong>Try asking me about:</strong><br>
-                    • "How do I set up weighted categories?"<br>
-                    • "What are the different aggregation methods?"<br>
-                    • "How do I import grades from CSV?"<br>
-                    • "Why are my calculations wrong?"<br>
-                    • "What are gradebook best practices?"
-                `;
-                document.getElementById('chat-box').appendChild(exampleElement);
-                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
-            }, 1000);
-        };
-    </script>
+  </main>
 </body>
 </html>
