@@ -1,99 +1,70 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>GB — GradeBot Pro</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.6;margin:0;padding:0;color:#0f172a;background:#f8fafc;}
-    header{background:#0369a1;color:#fff;padding:2rem 1.25rem}
-    header h1{margin:0;font-size:1.5rem}
-    main{max-width:1000px;margin:1.5rem auto;padding:1.25rem;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(2,6,23,.06)}
-    h2{color:#0f172a;margin-top:1.25rem}
-    p{color:#334155}
-    pre, code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Roboto Mono,monospace;background:#0f172a;color:#e6edf3;padding:.5rem;border-radius:6px;overflow:auto}
-    ul{margin:0 0 1rem 1.25rem}
-    .grid{display:grid;grid-template-columns:1fr;gap:1rem}
-    @media(min-width:880px){.grid{grid-template-columns:1fr 320px}}
-    aside{padding:1rem;border-left:1px solid #e6eef6}
-    .card{background:#f8fafc;padding:.9rem;border-radius:6px}
-    .small{font-size:.9rem;color:#475569}
-    table{width:100%;border-collapse:collapse;margin-top:.5rem}
-    th,td{padding:.4rem .6rem;border:1px solid #e6eef6;text-align:left}
-  </style>
-</head>
-<body>
-  <header>
-    <h1>GB — GradeBot Pro</h1>
-    <p class="small">Your comprehensive Moodle Gradebook assistant</p>
-  </header>
+<DOCUMENT filename="index.html.html">
 
-  <main>
-    <div class="grid">
-      <section>
-        <h2>Welcome</h2>
-        <p>Hello! I'm <strong>GradeBot Pro</strong>, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
+  <html>
+    <head>
+      <title>GB — GradeBot Pro</title>
+    </head>
+    <body>
+      <h1>GB — GradeBot Pro</h1>
+      <h2>Your comprehensive Moodle Gradebook assistant</h2>
 
-        <h2>Troubleshooting & Extra Information</h2>
+      <div>
+        <h3>Welcome</h3>
+        <p>Hello! I'm GradeBot Pro, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
+      </div>
+
+      <div>
+        <h3>Troubleshooting & Extra Information</h3>
         <p>This section consolidates common issues, checks, and step-by-step solutions to help diagnose and fix gradebook problems quickly.</p>
 
-        <h3>Common issues</h3>
-        <ul>
-          <li><strong>Missing grades</strong> — check activity settings and gradebook setup.</li>
-          <li><strong>Wrong calculations</strong> — verify aggregation methods and category weights.</li>
-          <li><strong>Import failures</strong> — check file format and data integrity.</li>
-          <li><strong>Permission errors</strong> — review role capabilities and activity settings.</li>
-          <li><strong>Display problems</strong> — clear cache and check browser compatibility.</li>
-          <li><strong>Performance issues</strong> — optimize settings for large courses.</li>
-        </ul>
-
-        <h3>Troubleshooting calculations</h3>
-        <ul>
-          <li>When calculations seem incorrect:
-            <ul>
-              <li>1) Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
-              <li>2) Check category weights sum appropriately (total 100% where required).</li>
-              <li>3) Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
-              <li>4) Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
-              <li>5) Review excluded items and hidden grade items.</li>
-              <li>6) Check category min/max values and validation rules.</li>
-              <li>7) Test with simple examples (create two items and verify expected results).</li>
-            </ul>
-          </li>
-        </ul>
-
-        <h3>Missing grades — quick fixes</h3>
-        <ul>
-          <li>If grades are missing from your gradebook:
-            <ul>
-              <li>1) Check the activity is set to "Send grades to gradebook" in activity settings.</li>
-              <li>2) Verify the activity has a grade item created in the gradebook.</li>
-              <li>3) Ensure students have submitted work (or a grade was entered).</li>
-              <li>4) Refresh the gradebook view after making changes.</li>
-              <li>5) Look for the grade item in the correct category and confirm aggregation settings.</li>
-              <li>6) Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
-              <li>7) Verify activity completion settings if completion auto-creates grades.</li>
-            </ul>
-          </li>
-        </ul>
-
-        <h3>Export issues & tips</h3>
-        <ul>
-          <li>Common problems when exporting:
-            <ul>
-              <li>1) Character encoding issues — use UTF-8 encoding for international characters.</li>
-              <li>2) Missing data — check export settings and filters; include all desired items.</li>
-              <li>3) Format errors — ensure proper CSV structure with headers and delimiters.</li>
-              <li>4) Permission denied — verify export capabilities in your role.</li>
-              <li>5) Large file issues — export in smaller batches for courses with many students.</li>
-              <li>6) Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
-            </ul>
-          </li>
-        </ul>
-
-        <h3>Step-by-step gradebook setup</h3>
+        <h4>Common issues</h4>
         <ol>
-          <li>Go to Administration &gt; Grades &gt; Setup &gt; Gradebook setup.</li>
+          <li>Missing grades — check activity settings and gradebook setup.</li>
+          <li>Wrong calculations — verify aggregation methods and category weights.</li>
+          <li>Import failures — check file format and data integrity.</li>
+          <li>Permission errors — review role capabilities and activity settings.</li>
+          <li>Display problems — clear cache and check browser compatibility.</li>
+          <li>Performance issues — optimize settings for large courses.</li>
+        </ol>
+
+        <h4>Troubleshooting calculations</h4>
+        <p>When calculations seem incorrect:</p>
+        <ol>
+          <li>Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
+          <li>Check category weights sum appropriately (total 100% where required).</li>
+          <li>Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
+          <li>Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
+          <li>Review excluded items and hidden grade items.</li>
+          <li>Check category min/max values and validation rules.</li>
+          <li>Test with simple examples (create two items and verify expected results).</li>
+        </ol>
+
+        <h4>Missing grades — quick fixes</h4>
+        <p>If grades are missing from your gradebook:</p>
+        <ol>
+          <li>Check the activity is set to "Send grades to gradebook" in activity settings.</li>
+          <li>Verify the activity has a grade item created in the gradebook.</li>
+          <li>Ensure students have submitted work (or a grade was entered).</li>
+          <li>Refresh the gradebook view after making changes.</li>
+          <li>Look for the grade item in the correct category and confirm aggregation settings.</li>
+          <li>Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
+          <li>Verify activity completion settings if completion auto-creates grades.</li>
+        </ol>
+
+        <h4>Export issues & tips</h4>
+        <p>Common problems when exporting:</p>
+        <ol>
+          <li>Character encoding issues — use UTF-8 encoding for international characters.</li>
+          <li>Missing data — check export settings and filters; include all desired items.</li>
+          <li>Format errors — ensure proper CSV structure with headers and delimiters.</li>
+          <li>Permission denied — verify export capabilities in your role.</li>
+          <li>Large file issues — export in smaller batches for courses with many students.</li>
+          <li>Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
+        </ol>
+
+        <h4>Step-by-step gradebook setup</h4>
+        <ol>
+          <li>Go to Administration > Grades > Setup > Gradebook setup.</li>
           <li>Click "Add category" to create main assessment categories (e.g., Assignments, Quizzes, Exams).</li>
           <li>Choose an aggregation method for each category — typically "Weighted mean of grades" for flexible weighting.</li>
           <li>Assign weights to each category based on your syllabus (total 100%).</li>
@@ -102,51 +73,46 @@
           <li>Test calculations with sample grades and adjust boundaries or letters if using a grading scale.</li>
         </ol>
 
-        <h3>Advanced formulas & examples</h3>
+        <h4>Advanced formulas & examples</h4>
         <p>Examples of advanced gradebook formulas and conditional grading patterns you may use:</p>
-        <div class="card">
-          <p class="small"><strong>Conditional grading example</strong></p>
-          <pre>IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</pre>
-          <p class="small"><strong>Weighted average with multiple components</strong></p>
-          <pre>(0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</pre>
-          <p class="small"><strong>Drop lowest of 3 quizzes</strong></p>
-          <pre>(SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</pre>
-          <p class="small">These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
-        </div>
-
-        <h3>Quick diagnostic checklist</h3>
         <ul>
+          <li>Conditional grading example: IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</li>
+          <li>Weighted average with multiple components: (0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</li>
+          <li>Drop lowest of 3 quizzes: (SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</li>
+        </ul>
+        <p>These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
+
+        <h4>Quick diagnostic checklist</h4>
+        <ol>
           <li>Are aggregation and category settings correct?</li>
           <li>Are activities sending grades to the gradebook?</li>
           <li>Have students submitted work or have grades been manually entered?</li>
           <li>Are any grade items hidden or excluded?</li>
           <li>Do roles and permissions allow viewing/exporting grades?</li>
           <li>Have you tested with small sample data to reproduce the issue?</li>
-        </ul>
+        </ol>
 
-        <h2>Notes & Links</h2>
+        <h4>Notes & Links</h4>
         <p>For persistent or complex issues, consider:</p>
         <ul>
           <li>Checking your LMS's debug logs and gradebook reports.</li>
           <li>Verifying plugin compatibility (grading/reporting plugins can change behavior).</li>
           <li>Contacting your LMS administrator with exact reproduction steps and screenshots.</li>
         </ul>
-      </section>
+      </div>
 
-      <aside>
-        <div class="card">
-          <h3 class="small">GradeBot Pro</h3>
-          <p class="small">Helpful commands:</p>
-          <ul class="small">
-            <li>Setup guide</li>
-            <li>Troubleshoot calculations</li>
-            <li>Export best practices</li>
-            <li>Advanced formula help</li>
-          </ul>
-          <p class="small">Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
-        </div>
-      </aside>
-    </div>
-  </main>
-</body>
-</html>
+      <div>
+        <h3>GradeBot Pro</h3>
+        <p>Helpful commands:</p>
+        <ul>
+          <li>Setup guide</li>
+          <li>Troubleshoot calculations</li>
+          <li>Export best practices</li>
+          <li>Advanced formula help</li>
+        </ul>
+        <p>Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
+      </div>
+    </body>
+  </html>
+
+</DOCUMENT>
