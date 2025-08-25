@@ -1,127 +1,214 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Rusche's GradeBot</title>
-  </head>
-  <body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rusche's GradeBot</title>
+  <style>
+    /* ====== General Styling ====== */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    h2 {
+      margin: 5px 0 0;
+      font-weight: 300;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      color: #2c3e50;
+    }
+
+    /* ====== Chatbox Styling ====== */
+    #chatbox {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      height: 350px;
+      overflow-y: auto;
+      background: #fafafa;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      display: inline-block;
+      padding: 10px 14px;
+      margin: 6px 0;
+      border-radius: 12px;
+      max-width: 70%;
+      position: relative;
+      font-size: 14px;
+    }
+
+    .bot-message {
+      background: #e1f5fe;
+      align-self: flex-start;
+    }
+
+    .user-message {
+      background: #d1f5d3;
+      align-self: flex-end;
+    }
+
+    .timestamp {
+      display: block;
+      font-size: 10px;
+      color: #777;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    #input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 16px;
+      background: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #34495e;
+    }
+
+    .button-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
     <h1>Rusche's GradeBot</h1>
     <h2>Your comprehensive Moodle Gradebook assistant</h2>
+  </header>
 
-    <div>
-      <h3>Welcome</h3>
-      <p>Hello! I'm Rusche's GradeBot, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
+  <div class="container">
+    <h3>Chat with Rusche's GradeBot</h3>
+    <div id="chatbox">
+      <div class="message bot-message">
+        👋 Hello! Ask me about Moodle Gradebook setup, categories, or troubleshooting.
+        <span class="timestamp"></span>
+      </div>
     </div>
-
-    <div>
-      <h3>Try asking me about:</h3>
-      <ol>
-        <li>How do I set up weighted categories?</li>
-        <li>What are the different aggregation methods?</li>
-        <li>How do I import grades from CSV?</li>
-        <li>Why are my calculations wrong?</li>
-        <li>What are gradebook best practices?</li>
-      </ol>
+    <div id="input-area">
+      <input type="text" id="user-input" placeholder="Type your question here...">
+      <button onclick="sendMessage()">Send</button>
     </div>
-
-    <div>
-      <h3>Troubleshooting & Extra Information</h3>
-      <p>This section consolidates common issues, checks, and step-by-step solutions to help diagnose and fix gradebook problems quickly.</p>
-
-      <h4>Common issues</h4>
-      <ol>
-        <li>Missing grades — check activity settings and gradebook setup.</li>
-        <li>Wrong calculations — verify aggregation methods and category weights.</li>
-        <li>Import failures — check file format and data integrity.</li>
-        <li>Permission errors — review role capabilities and activity settings.</li>
-        <li>Display problems — clear cache and check browser compatibility.</li>
-        <li>Performance issues — optimize settings for large courses.</li>
-      </ol>
-
-      <h4>Troubleshooting calculations</h4>
-      <p>When calculations seem incorrect:</p>
-      <ol>
-        <li>Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
-        <li>Check category weights sum appropriately (total 100% where required).</li>
-        <li>Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
-        <li>Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
-        <li>Review excluded items and hidden grade items.</li>
-        <li>Check category min/max values and validation rules.</li>
-        <li>Test with simple examples (create two items and verify expected results).</li>
-      </ol>
-
-      <h4>Missing grades — quick fixes</h4>
-      <p>If grades are missing from your gradebook:</p>
-      <ol>
-        <li>Check the activity is set to "Send grades to gradebook" in activity settings.</li>
-        <li>Verify the activity has a grade item created in the gradebook.</li>
-        <li>Ensure students have submitted work (or a grade was entered).</li>
-        <li>Refresh the gradebook view after making changes.</li>
-        <li>Look for the grade item in the correct category and confirm aggregation settings.</li>
-        <li>Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
-        <li>Verify activity completion settings if completion auto-creates grades.</li>
-      </ol>
-
-      <h4>Export issues & tips</h4>
-      <p>Common problems when exporting:</p>
-      <ol>
-        <li>Character encoding issues — use UTF-8 encoding for international characters.</li>
-        <li>Missing data — check export settings and filters; include all desired items.</li>
-        <li>Format errors — ensure proper CSV structure with headers and delimiters.</li>
-        <li>Permission denied — verify export capabilities in your role.</li>
-        <li>Large file issues — export in smaller batches for courses with many students.</li>
-        <li>Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
-      </ol>
-
-      <h4>Step-by-step gradebook setup</h4>
-      <ol>
-        <li>Go to Administration > Grades > Setup > Gradebook setup.</li>
-        <li>Click "Add category" to create main assessment categories (e.g., Assignments, Quizzes, Exams).</li>
-        <li>Choose an aggregation method for each category — typically "Weighted mean of grades" for flexible weighting.</li>
-        <li>Assign weights to each category based on your syllabus (total 100%).</li>
-        <li>Add individual grade items or link activities to the gradebook and assign them to categories.</li>
-        <li>Configure grade item settings: max/min values, drop lowest, exclude empty grades, etc.</li>
-        <li>Test calculations with sample grades and adjust boundaries or letters if using a grading scale.</li>
-      </ol>
-
-      <h4>Advanced formulas & examples</h4>
-      <p>Examples of advanced gradebook formulas and conditional grading patterns you may use:</p>
-      <ol>
-        <li>Conditional grading example: IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</li>
-        <li>Weighted average with multiple components: (0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</li>
-        <li>Drop lowest of 3 quizzes: (SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</li>
-      </ol>
-      <p>These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
-
-      <h4>Quick diagnostic checklist</h4>
-      <ol>
-        <li>Are aggregation and category settings correct?</li>
-        <li>Are activities sending grades to the gradebook?</li>
-        <li>Have students submitted work or have grades been manually entered?</li>
-        <li>Are any grade items hidden or excluded?</li>
-        <li>Do roles and permissions allow viewing/exporting grades?</li>
-        <li>Have you tested with small sample data to reproduce the issue?</li>
-      </ol>
-
-      <h4>Notes & Links</h4>
-      <p>For persistent or complex issues, consider:</p>
-      <ol>
-        <li>Checking your LMS's debug logs and gradebook reports.</li>
-        <li>Verifying plugin compatibility (grading/reporting plugins can change behavior).</li>
-        <li>Contacting your LMS administrator with exact reproduction steps and screenshots.</li>
-      </ol>
+    <div class="button-row">
+      <button onclick="saveChat()">💾 Save Chat</button>
+      <button onclick="clearChat()">🧹 Clear Chat</button>
     </div>
+  </div>
 
-    <div>
-      <h3>Rusche's GradeBot</h3>
-      <p>Helpful commands:</p>
-      <ol>
-        <li>Setup guide</li>
-        <li>Troubleshoot calculations</li>
-        <li>Export best practices</li>
-        <li>Advanced formula help</li>
-      </ol>
-      <p>Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
-    </div>
-  </body>
+  <script>
+    // Keep chat history
+    let chatHistory = [];
+
+    function getTimestamp() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function addMessage(text, sender) {
+      const chatbox = document.getElementById("chatbox");
+
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + (sender === "user" ? "user-message" : "bot-message");
+      msgDiv.innerText = text;
+
+      const timeSpan = document.createElement("span");
+      timeSpan.className = "timestamp";
+      timeSpan.innerText = getTimestamp();
+
+      msgDiv.appendChild(document.createElement("br"));
+      msgDiv.appendChild(timeSpan);
+
+      chatbox.appendChild(msgDiv);
+
+      chatbox.scrollTop = chatbox.scrollHeight;
+
+      chatHistory.push((sender === "user" ? "User" : "Bot") + " (" + getTimestamp() + "): " + text);
+    }
+
+    function sendMessage() {
+      const inputField = document.getElementById("user-input");
+      const message = inputField.value.trim();
+      if (message === "") return;
+
+      addMessage(message, "user");
+
+      // Simple bot responses (expand as needed)
+      let response = "🤖 Sorry, I don't understand that yet. Try asking about 'categories' or 'import grades'.";
+      if (message.toLowerCase().includes("category")) {
+        response = "📂 Categories help you organize grade items in Moodle. You can also apply weights per category.";
+      } else if (message.toLowerCase().includes("import")) {
+        response = "📥 To import grades, go to 'Gradebook > Import > CSV' and follow the prompts.";
+      } else if (message.toLowerCase().includes("troubleshoot")) {
+        response = "🛠 Common fixes: check aggregation methods, empty grades, and category weights.";
+      }
+
+      addMessage(response, "bot");
+
+      inputField.value = "";
+    }
+
+    function saveChat() {
+      const blob = new Blob([chatHistory.join("\n")], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "Rusches_GradeBot_Chat.txt";
+      link.click();
+    }
+
+    function clearChat() {
+      document.getElementById("chatbox").innerHTML = "";
+      chatHistory = [];
+      addMessage("👋 Hello! Ask me about Moodle Gradebook setup, categories, or troubleshooting.", "bot");
+    }
+
+    // Add timestamp to initial greeting
+    document.querySelector(".timestamp").innerText = getTimestamp();
+  </script>
+</body>
 </html>
