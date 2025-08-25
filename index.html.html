@@ -1,129 +1,127 @@
-<DOCUMENT filename="index.html.html">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Rusche's GradeBot</title>
+  </head>
+  <body>
+    <h1>Rusche's GradeBot</h1>
+    <h2>Your comprehensive Moodle Gradebook assistant</h2>
 
-  <html>
-    <head>
-      <title>Rusche's GradeBot</title>
-    </head>
-    <body>
-      <h1>Rusche's GradeBot</h1>
-      <h2>Your comprehensive Moodle Gradebook assistant</h2>
+    <div>
+      <h3>Welcome</h3>
+      <p>Hello! I'm Rusche's GradeBot, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
+    </div>
 
-      <div>
-        <h3>Welcome</h3>
-        <p>Hello! I'm Rusche's GradeBot, your comprehensive Moodle Gradebook assistant. I can help you with all aspects of the Moodle Gradebook including setup, categories, calculations, reports, permissions, troubleshooting, and much more. What would you like to know?</p>
-      </div>
+    <div>
+      <h3>Try asking me about:</h3>
+      <ol>
+        <li>How do I set up weighted categories?</li>
+        <li>What are the different aggregation methods?</li>
+        <li>How do I import grades from CSV?</li>
+        <li>Why are my calculations wrong?</li>
+        <li>What are gradebook best practices?</li>
+      </ol>
+    </div>
 
-      <div>
-        <h3>Try asking me about:</h3>
-        <ol>
-          <li>How do I set up weighted categories?</li>
-          <li>What are the different aggregation methods?</li>
-          <li>How do I import grades from CSV?</li>
-          <li>Why are my calculations wrong?</li>
-          <li>What are gradebook best practices?</li>
-        </ol>
-      </div>
+    <div>
+      <h3>Troubleshooting & Extra Information</h3>
+      <p>This section consolidates common issues, checks, and step-by-step solutions to help diagnose and fix gradebook problems quickly.</p>
 
-      <div>
-        <h3>Troubleshooting & Extra Information</h3>
-        <p>This section consolidates common issues, checks, and step-by-step solutions to help diagnose and fix gradebook problems quickly.</p>
+      <h4>Common issues</h4>
+      <ol>
+        <li>Missing grades — check activity settings and gradebook setup.</li>
+        <li>Wrong calculations — verify aggregation methods and category weights.</li>
+        <li>Import failures — check file format and data integrity.</li>
+        <li>Permission errors — review role capabilities and activity settings.</li>
+        <li>Display problems — clear cache and check browser compatibility.</li>
+        <li>Performance issues — optimize settings for large courses.</li>
+      </ol>
 
-        <h4>Common issues</h4>
-        <ol>
-          <li>Missing grades — check activity settings and gradebook setup.</li>
-          <li>Wrong calculations — verify aggregation methods and category weights.</li>
-          <li>Import failures — check file format and data integrity.</li>
-          <li>Permission errors — review role capabilities and activity settings.</li>
-          <li>Display problems — clear cache and check browser compatibility.</li>
-          <li>Performance issues — optimize settings for large courses.</li>
-        </ol>
+      <h4>Troubleshooting calculations</h4>
+      <p>When calculations seem incorrect:</p>
+      <ol>
+        <li>Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
+        <li>Check category weights sum appropriately (total 100% where required).</li>
+        <li>Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
+        <li>Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
+        <li>Review excluded items and hidden grade items.</li>
+        <li>Check category min/max values and validation rules.</li>
+        <li>Test with simple examples (create two items and verify expected results).</li>
+      </ol>
 
-        <h4>Troubleshooting calculations</h4>
-        <p>When calculations seem incorrect:</p>
-        <ol>
-          <li>Verify aggregation method matches your intended calculation (Mean, Weighted, Sum, etc.).</li>
-          <li>Check category weights sum appropriately (total 100% where required).</li>
-          <li>Look for empty grades affecting averages — confirm whether "Aggregate only non-empty grades" is set.</li>
-          <li>Confirm 'Aggregate only non-empty grades' and excluded items settings.</li>
-          <li>Review excluded items and hidden grade items.</li>
-          <li>Check category min/max values and validation rules.</li>
-          <li>Test with simple examples (create two items and verify expected results).</li>
-        </ol>
+      <h4>Missing grades — quick fixes</h4>
+      <p>If grades are missing from your gradebook:</p>
+      <ol>
+        <li>Check the activity is set to "Send grades to gradebook" in activity settings.</li>
+        <li>Verify the activity has a grade item created in the gradebook.</li>
+        <li>Ensure students have submitted work (or a grade was entered).</li>
+        <li>Refresh the gradebook view after making changes.</li>
+        <li>Look for the grade item in the correct category and confirm aggregation settings.</li>
+        <li>Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
+        <li>Verify activity completion settings if completion auto-creates grades.</li>
+      </ol>
 
-        <h4>Missing grades — quick fixes</h4>
-        <p>If grades are missing from your gradebook:</p>
-        <ol>
-          <li>Check the activity is set to "Send grades to gradebook" in activity settings.</li>
-          <li>Verify the activity has a grade item created in the gradebook.</li>
-          <li>Ensure students have submitted work (or a grade was entered).</li>
-          <li>Refresh the gradebook view after making changes.</li>
-          <li>Look for the grade item in the correct category and confirm aggregation settings.</li>
-          <li>Ensure the aggregation is set to "Mean of grades (with empty grades)" or the correct mode for your needs.</li>
-          <li>Verify activity completion settings if completion auto-creates grades.</li>
-        </ol>
+      <h4>Export issues & tips</h4>
+      <p>Common problems when exporting:</p>
+      <ol>
+        <li>Character encoding issues — use UTF-8 encoding for international characters.</li>
+        <li>Missing data — check export settings and filters; include all desired items.</li>
+        <li>Format errors — ensure proper CSV structure with headers and delimiters.</li>
+        <li>Permission denied — verify export capabilities in your role.</li>
+        <li>Large file issues — export in smaller batches for courses with many students.</li>
+        <li>Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
+      </ol>
 
-        <h4>Export issues & tips</h4>
-        <p>Common problems when exporting:</p>
-        <ol>
-          <li>Character encoding issues — use UTF-8 encoding for international characters.</li>
-          <li>Missing data — check export settings and filters; include all desired items.</li>
-          <li>Format errors — ensure proper CSV structure with headers and delimiters.</li>
-          <li>Permission denied — verify export capabilities in your role.</li>
-          <li>Large file issues — export in smaller batches for courses with many students.</li>
-          <li>Formula cells — exported CSV will not preserve calculated formulas from spreadsheet programs; export raw values when needed.</li>
-        </ol>
+      <h4>Step-by-step gradebook setup</h4>
+      <ol>
+        <li>Go to Administration > Grades > Setup > Gradebook setup.</li>
+        <li>Click "Add category" to create main assessment categories (e.g., Assignments, Quizzes, Exams).</li>
+        <li>Choose an aggregation method for each category — typically "Weighted mean of grades" for flexible weighting.</li>
+        <li>Assign weights to each category based on your syllabus (total 100%).</li>
+        <li>Add individual grade items or link activities to the gradebook and assign them to categories.</li>
+        <li>Configure grade item settings: max/min values, drop lowest, exclude empty grades, etc.</li>
+        <li>Test calculations with sample grades and adjust boundaries or letters if using a grading scale.</li>
+      </ol>
 
-        <h4>Step-by-step gradebook setup</h4>
-        <ol>
-          <li>Go to Administration > Grades > Setup > Gradebook setup.</li>
-          <li>Click "Add category" to create main assessment categories (e.g., Assignments, Quizzes, Exams).</li>
-          <li>Choose an aggregation method for each category — typically "Weighted mean of grades" for flexible weighting.</li>
-          <li>Assign weights to each category based on your syllabus (total 100%).</li>
-          <li>Add individual grade items or link activities to the gradebook and assign them to categories.</li>
-          <li>Configure grade item settings: max/min values, drop lowest, exclude empty grades, etc.</li>
-          <li>Test calculations with sample grades and adjust boundaries or letters if using a grading scale.</li>
-        </ol>
+      <h4>Advanced formulas & examples</h4>
+      <p>Examples of advanced gradebook formulas and conditional grading patterns you may use:</p>
+      <ol>
+        <li>Conditional grading example: IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</li>
+        <li>Weighted average with multiple components: (0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</li>
+        <li>Drop lowest of 3 quizzes: (SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</li>
+      </ol>
+      <p>These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
 
-        <h4>Advanced formulas & examples</h4>
-        <p>Examples of advanced gradebook formulas and conditional grading patterns you may use:</p>
-        <ol>
-          <li>Conditional grading example: IF([Attendance]>=80, ([Final]*0.8)+([Bonus]*0.2), [Final]*0.8)</li>
-          <li>Weighted average with multiple components: (0.3*[Quiz1])+(0.3*[Quiz2])+(0.4*[Final])</li>
-          <li>Drop lowest of 3 quizzes: (SUM([Quiz1],[Quiz2],[Quiz3]) - MIN([Quiz1],[Quiz2],[Quiz3])) / 2</li>
-        </ol>
-        <p>These are illustrative; adjust field names and syntax to your LMS's formula requirements.</p>
+      <h4>Quick diagnostic checklist</h4>
+      <ol>
+        <li>Are aggregation and category settings correct?</li>
+        <li>Are activities sending grades to the gradebook?</li>
+        <li>Have students submitted work or have grades been manually entered?</li>
+        <li>Are any grade items hidden or excluded?</li>
+        <li>Do roles and permissions allow viewing/exporting grades?</li>
+        <li>Have you tested with small sample data to reproduce the issue?</li>
+      </ol>
 
-        <h4>Quick diagnostic checklist</h4>
-        <ol>
-          <li>Are aggregation and category settings correct?</li>
-          <li>Are activities sending grades to the gradebook?</li>
-          <li>Have students submitted work or have grades been manually entered?</li>
-          <li>Are any grade items hidden or excluded?</li>
-          <li>Do roles and permissions allow viewing/exporting grades?</li>
-          <li>Have you tested with small sample data to reproduce the issue?</li>
-        </ol>
+      <h4>Notes & Links</h4>
+      <p>For persistent or complex issues, consider:</p>
+      <ol>
+        <li>Checking your LMS's debug logs and gradebook reports.</li>
+        <li>Verifying plugin compatibility (grading/reporting plugins can change behavior).</li>
+        <li>Contacting your LMS administrator with exact reproduction steps and screenshots.</li>
+      </ol>
+    </div>
 
-        <h4>Notes & Links</h4>
-        <p>For persistent or complex issues, consider:</p>
-        <ol>
-          <li>Checking your LMS's debug logs and gradebook reports.</li>
-          <li>Verifying plugin compatibility (grading/reporting plugins can change behavior).</li>
-          <li>Contacting your LMS administrator with exact reproduction steps and screenshots.</li>
-        </ol>
-      </div>
-
-      <div>
-        <h3>Rusche's GradeBot</h3>
-        <p>Helpful commands:</p>
-        <ol>
-          <li>Setup guide</li>
-          <li>Troubleshoot calculations</li>
-          <li>Export best practices</li>
-          <li>Advanced formula help</li>
-        </ol>
-        <p>Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
-      </div>
-    </body>
-  </html>
-
-</DOCUMENT>
+    <div>
+      <h3>Rusche's GradeBot</h3>
+      <p>Helpful commands:</p>
+      <ol>
+        <li>Setup guide</li>
+        <li>Troubleshoot calculations</li>
+        <li>Export best practices</li>
+        <li>Advanced formula help</li>
+      </ol>
+      <p>Need the merged file saved or exported? Ask me to save or provide a downloadable file.</p>
+    </div>
+  </body>
+</html>
